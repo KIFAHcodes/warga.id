@@ -42,13 +42,25 @@ if (!$data) {
     </div>
 
     <div class="mb-3">
-      <label for="nik" class="form-label">NIK</label>
-      <input type="text" name="nik" class="form-control" value="<?= htmlspecialchars($data['nik']) ?>" required maxlength="16">
+      <label for="nik" class="form-label">
+        NIK Kepala Keluarga <small class="text-muted">(16 digit angka)</small>
+      </label>
+      <input type="text" name="nik" class="form-control"
+         value="<?= htmlspecialchars($data['nik']) ?>"
+         maxlength="16" pattern="\d{16}" required
+         title="NIK harus berupa 16 digit angka"
+         oninput="this.value=this.value.replace(/[^0-9]/g,'');">
     </div>
 
     <div class="mb-3">
-      <label for="no_kk" class="form-label">No. KK</label>
-      <input type="text" name="no_kk" class="form-control" value="<?= htmlspecialchars($data['no_kk']) ?>" required maxlength="16">
+      <label for="no_kk" class="form-label">
+        Nomor KK <small class="text-muted">(16 digit angka)</small>
+      </label>
+      <input type="text" name="no_kk" class="form-control"
+         value="<?= htmlspecialchars($data['no_kk']) ?>"
+         maxlength="16" pattern="\d{16}" required
+         title="Nomor KK harus berupa 16 digit angka"
+         oninput="this.value=this.value.replace(/[^0-9]/g,'');">
     </div>
 
     <div class="mb-3">
@@ -64,6 +76,16 @@ if (!$data) {
     <div class="mb-3">
       <label for="jumlah_keluarga" class="form-label">Jumlah Keluarga</label>
       <input type="number" name="jumlah_keluarga" class="form-control" value="<?= htmlspecialchars($data['jumlah_keluarga']) ?>" min="1" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($data['email']) ?>" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="kontak_darurat" class="form-label">Kontak Darurat</label>
+      <input type="text" name="kontak_darurat" class="form-control" value="<?= htmlspecialchars($data['kontak_darurat']) ?>" required>
     </div>
 
     <div class="mb-3">

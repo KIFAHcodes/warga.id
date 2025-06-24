@@ -35,13 +35,33 @@ if (mysqli_num_rows($cek) > 0) {
           <form action="../../proses/data/input.php" method="POST">
 
             <div class="mb-3">
-              <label for="nik" class="form-label">NIK Kepala Keluarga</label>
-              <input type="text" name="nik" class="form-control" maxlength="16" required>
+              <label for="nik" class="form-label">
+                NIK Kepala Keluarga <small class="text-muted">(Masukkan 16 angka sesuai KTP)</small>
+              </label>
+              <input
+                type="text"
+                name="nik"
+                class="form-control"
+                maxlength="16"
+                pattern="\d{16}"
+                required
+                title="NIK harus berupa 16 digit angka"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');">
             </div>
 
             <div class="mb-3">
-              <label for="no_kk" class="form-label">Nomor KK</label>
-              <input type="text" name="no_kk" class="form-control" maxlength="16" required>
+              <label for="no_kk" class="form-label">
+                Nomor KK <small class="text-muted">(Masukkan 16 angka sesuai Kartu Keluarga)</small>
+              </label>
+              <input
+                type="text"
+                name="no_kk"
+                class="form-control"
+                maxlength="16"
+                pattern="\d{16}"
+                required
+                title="Nomor KK harus berupa 16 digit angka"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');">
             </div>
 
             <div class="mb-3">

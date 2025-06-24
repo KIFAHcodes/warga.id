@@ -35,7 +35,7 @@ $query = mysqli_query($conn, "
           <tr>
             <th>Nama User</th>
             <th>No. HP</th>
-            <th>KK</th>
+            <th>Kepala Keluarga</th>
             <th>No. Rumah</th>
             <th>Kode Keluarga</th>
             <th>Status</th>
