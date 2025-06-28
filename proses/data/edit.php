@@ -20,9 +20,23 @@ $email            = $_POST['email'];
 $kontak_darurat   = $_POST['kontak_darurat'];
 $agama            = $_POST['agama'];
 
-// Validasi angka 16 digit
+// Validasi NIK dan No KK (16 digit)
 if (!preg_match('/^\d{16}$/', $nik) || !preg_match('/^\d{16}$/', $no_kk)) {
   $_SESSION['error'] = "NIK dan No. KK harus terdiri dari 16 digit angka.";
+  header("Location: ../../pages/admin/edit-data.php?id=" . $id);
+  exit;
+}
+
+// Validasi email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  $_SESSION['error'] = "Format email tidak valid.";
+  header("Location: ../../pages/admin/edit-data.php?id=" . $id);
+  exit;
+}
+
+// Validasi kontak darurat (10–13 digit angka)
+if (!preg_match('/^\d{10,13}$/', $kontak_darurat)) {
+  $_SESSION['error'] = "Nomor kontak darurat harus 10–13 digit angka.";
   header("Location: ../../pages/admin/edit-data.php?id=" . $id);
   exit;
 }

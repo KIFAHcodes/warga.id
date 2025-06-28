@@ -17,6 +17,23 @@ $agama           = mysqli_real_escape_string($conn, $_POST['agama']);
 // Validasi: NIK dan No KK harus 16 digit angka
 if (!preg_match('/^\d{16}$/', $nik) || !preg_match('/^\d{16}$/', $no_kk)) {
     $_SESSION['error'] = "NIK dan Nomor KK harus terdiri dari 16 digit angka.";
+    $_SESSION['old'] = $_POST;
+    header("Location: ../../pages/warga/input-data.php");
+    exit;
+}
+
+// Validasi: Email harus format valid
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['error'] = "Format email tidak valid.";
+    $_SESSION['old'] = $_POST;
+    header("Location: ../../pages/warga/input-data.php");
+    exit;
+}
+
+// Validasi: Kontak darurat hanya 10–13 digit angka
+if (!preg_match('/^\d{10,13}$/', $kontak_darurat)) {
+    $_SESSION['error'] = "Nomor kontak darurat harus 10–13 digit angka.";
+    $_SESSION['old'] = $_POST;
     header("Location: ../../pages/warga/input-data.php");
     exit;
 }
@@ -33,6 +50,7 @@ if (mysqli_num_rows($cek) > 0) {
 $cek_kode = mysqli_query($conn, "SELECT * FROM data_warga WHERE kode_keluarga = '$kode_keluarga'");
 if (mysqli_num_rows($cek_kode) > 0) {
     $_SESSION['error'] = "Kode keluarga sudah digunakan.";
+    $_SESSION['old'] = $_POST;
     header("Location: ../../pages/warga/input-data.php");
     exit;
 }
@@ -48,6 +66,7 @@ if (mysqli_query($conn, $query)) {
     header("Location: ../../pages/warga/lihat-data.php");
 } else {
     $_SESSION['error'] = "Gagal menyimpan data.";
+    $_SESSION['old'] = $_POST;
     header("Location: ../../pages/warga/input-data.php");
 }
 exit;

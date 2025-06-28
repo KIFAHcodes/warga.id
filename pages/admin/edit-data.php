@@ -33,6 +33,15 @@ if (!$data) {
 <div class="container py-5">
   <h3 class="mb-4 text-center">Edit Data Warga</h3>
 
+  <!-- ✅ ALERT ERROR -->
+  <?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <?= $_SESSION['error']; ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+  <?php endif; ?>
+
   <form action="../../proses/data/edit.php" method="POST" class="shadow p-4 bg-white rounded">
     <input type="hidden" name="id" value="<?= htmlspecialchars($data['id']) ?>">
 
@@ -80,12 +89,29 @@ if (!$data) {
 
     <div class="mb-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($data['email']) ?>" required>
+      <input 
+        type="text" 
+        name="email" 
+        class="form-control" 
+        value="<?= htmlspecialchars($data['email']) ?>" 
+        required
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        title="Masukkan email yang benar, contoh: user@gmail.com">
     </div>
 
     <div class="mb-3">
-      <label for="kontak_darurat" class="form-label">Kontak Darurat</label>
-      <input type="text" name="kontak_darurat" class="form-control" value="<?= htmlspecialchars($data['kontak_darurat']) ?>" required>
+      <label for="kontak_darurat" class="form-label">Nomor Kontak Darurat</label>
+      <input
+        type="text"
+        name="kontak_darurat"
+        class="form-control"
+        maxlength="13"
+        pattern="\d{10,13}"
+        required
+        title="Nomor HP harus terdiri dari 10–13 digit angka"
+        value="<?= htmlspecialchars($data['kontak_darurat']) ?>"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+      <div class="form-text">Masukkan nomor HP aktif (10–13 digit angka)</div>
     </div>
 
     <div class="mb-3">
