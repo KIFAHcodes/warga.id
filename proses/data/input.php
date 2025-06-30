@@ -38,7 +38,16 @@ if (!preg_match('/^\d{10,13}$/', $kontak_darurat)) {
     exit;
 }
 
-// Cek apakah user sudah mengisi sebelumnya
+// ✅ DITAMBAHKAN: Validasi apakah No KK sudah pernah dipakai anggota keluarga lain
+$cek_kk = mysqli_query($conn, "SELECT * FROM data_warga WHERE no_kk = '$no_kk'");
+if (mysqli_num_rows($cek_kk) > 0) {
+    $_SESSION['error'] = "Nomor KK sudah digunakan oleh anggota keluarga lain.";
+    $_SESSION['old'] = $_POST;
+    header("Location: ../../pages/warga/input-data.php");
+    exit;
+}
+
+// Validasi: Apakah user sudah pernah isi data sebelumnya
 $cek = mysqli_query($conn, "SELECT * FROM data_warga WHERE id_user = '$id_user'");
 if (mysqli_num_rows($cek) > 0) {
     $_SESSION['error'] = "Data sudah pernah diisi.";
@@ -46,7 +55,7 @@ if (mysqli_num_rows($cek) > 0) {
     exit;
 }
 
-// Cek apakah kode_keluarga sudah digunakan orang lain
+// Validasi: Kode keluarga (opsional, bisa dihapus nanti kalau lo gak pakai)
 $cek_kode = mysqli_query($conn, "SELECT * FROM data_warga WHERE kode_keluarga = '$kode_keluarga'");
 if (mysqli_num_rows($cek_kode) > 0) {
     $_SESSION['error'] = "Kode keluarga sudah digunakan.";
@@ -55,7 +64,7 @@ if (mysqli_num_rows($cek_kode) > 0) {
     exit;
 }
 
-// Insert data
+// Insert data ke database
 $query = "INSERT INTO data_warga 
 (id_user, nik, no_kk, kode_keluarga, alamat, nomor_rumah, email, kepala_keluarga, jumlah_keluarga, kontak_darurat, agama, status_data, created_at)
 VALUES 
